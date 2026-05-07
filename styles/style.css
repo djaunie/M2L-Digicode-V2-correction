@@ -1,0 +1,48 @@
+/* style.css — M2L Application Digicode V1 */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 1rem; background: #f0f2f5;
+    color: #1a1a2e; min-height: 100vh; display: flex; align-items: center;
+    justify-content: center; padding: 2rem 1rem; }
+.container { background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    padding: 2.5rem 2rem; width: 100%; max-width: 520px; }
+h1 { font-size: 1.5rem; color: #0d3b66; margin-bottom: .25rem; }
+h2 { font-size: 1.1rem; color: #555; margin-bottom: 1.5rem; font-weight: 400; }
+label { display: block; margin-top: 1rem; margin-bottom: .25rem; font-weight: 600; font-size: .9rem; }
+input[type="text"], input[type="password"], input[type="email"], textarea {
+    width: 100%; padding: .6rem .8rem; border: 1px solid #ccc; border-radius: 6px;
+    font-size: 1rem; transition: border-color .2s; }
+input:focus, textarea:focus { outline: none; border-color: #0d3b66; }
+button[type="submit"] { display: block; width: 100%; margin-top: 1.5rem; padding: .75rem;
+    background: #0d3b66; color: #fff; border: none; border-radius: 6px;
+    font-size: 1rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+button[type="submit"]:hover { background: #08264a; }
+.btn-retour { display: block; text-align: center; margin-top: .75rem; color: #0d3b66;
+    text-decoration: none; font-size: .9rem; }
+.btn-retour:hover { text-decoration: underline; }
+.erreur { background: #fde8e8; color: #b91c1c; border: 1px solid #fca5a5;
+    border-radius: 6px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem; }
+.succes { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7;
+    border-radius: 6px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem; }
+.digicode-box { background: #0d3b66; color: #fff; border-radius: 10px;
+    padding: 1.5rem; text-align: center; margin: 1.5rem 0; }
+.digicode-box h2 { color: #fff; font-size: 1rem; margin-bottom: .5rem; }
+.digicode { font-size: 2.5rem; font-weight: 700; letter-spacing: .4rem; font-family: monospace; }
+.digicode-sm { font-family: monospace; font-size: 1.1rem; letter-spacing: .2rem; }
+.menu { display: flex; flex-direction: column; gap: .6rem; margin-top: 1.5rem; }
+.menu a { display: block; padding: .65rem 1rem; background: #f0f2f5; border: 1px solid #ddd;
+    border-radius: 6px; color: #0d3b66; text-decoration: none; font-weight: 600;
+    text-align: center; transition: background .2s; }
+.menu a:hover { background: #dce3ec; }
+.menu a:last-child { background: #fde8e8; border-color: #fca5a5; color: #b91c1c; }
+.menu a:last-child:hover { background: #fecaca; }
+.checkbox-list { display: flex; flex-direction: column; gap: .4rem; margin-top: .4rem; }
+.checkbox-item { display: flex; align-items: center; gap: .5rem; font-size: .9rem; cursor: pointer; }
+
+/* ===== Ajouts V2 ===== */
+.table-salles { width: 100%; border-collapse: collapse; margin: 1.2rem 0; }
+.table-salles th, .table-salles td { padding: .6rem .8rem; border: 1px solid #ddd;
+    text-align: left; font-size: .95rem; }
+.table-salles th { background: #0d3b66; color: #fff; font-weight: 600; }
+.table-salles tr:nth-child(even) { background: #f7f9fc; }
+.info { background: #fff8e1; color: #92400e; border: 1px solid #fcd34d;
+    border-radius: 6px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem; }
