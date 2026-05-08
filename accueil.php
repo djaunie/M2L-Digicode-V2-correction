@@ -17,9 +17,10 @@ $pdo = getPDO();
 
 // -----------------------------------------------------------------------------
 // Recherche d'une reservation valide pour aujourd'hui
-// Le login de l'utilisateur est stocke en session sous la cle 'user_login'
+// Le login de l'utilisateur est stocke en session sous la cle 'user_name'
+// (defini dans index.php : $_SESSION['user_name'] = $user['name'])
 // -----------------------------------------------------------------------------
-$reservation = getReservationAujourdhui($pdo, $_SESSION['user_login']);
+$reservation = getReservationAujourdhui($pdo, $_SESSION['user_name']);
 
 // -----------------------------------------------------------------------------
 // Messages flash (parametres GET) - affiches apres une redirection
