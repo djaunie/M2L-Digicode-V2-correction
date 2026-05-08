@@ -276,14 +276,23 @@ button[type="submit"]:hover {
 .digicode-box--vide {
     background: #fff3cd;
     border: 1px solid #ffc107;
-    color: #856404;
+    color: #5a3e00;
 }
 
-/* Message informatif sous le code */
+/* Titre h2 dans le bloc vide — brun foncé pour lisibilité sur fond jaune */
+.digicode-box--vide h2 {
+    color: #5a3e00;
+}
+
+/* Message informatif sous le code — blanc sur fond bleu, brun foncé sur fond jaune */
 .digicode-box .info {
     font-size: 0.9rem;
-    color: #555;
+    color: #fff;
     margin-top: 0.5rem;
+}
+
+.digicode-box--vide .info {
+    color: #5a3e00;
 }
 
 /* Tableau des salles (modifier_digicodes.php) */

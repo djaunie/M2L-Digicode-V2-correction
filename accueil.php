@@ -54,8 +54,6 @@ $messageSucces = $msgs_succes[$_GET['success'] ?? ''] ?? '';
     <p>
         Bienvenue, <strong><?= htmlspecialchars($_SESSION['user_name']) ?></strong>
         (<?= isAdmin() ? 'Administrateur' : 'Utilisateur' ?>)
-        &nbsp;|&nbsp;
-        <a href="logout.php">Se deconnecter</a>
     </p>
 
     <!-- Messages flash -->
@@ -89,13 +87,19 @@ $messageSucces = $msgs_succes[$_GET['success'] ?? ''] ?? '';
     <!-- Navigation selon le role                                            -->
     <!-- ------------------------------------------------------------------ -->
     <nav class="menu">
-        <ul>
-            <li><a href="changer_mdp.php">Modifier mon mot de passe</a></li>
-            <?php if (isAdmin()): ?>
-                <li><a href="modifier_digicodes.php">Regenerer les digicodes</a></li>
-                <li><a href="envoyer_mail.php">Envoyer un mail</a></li>
-            <?php endif; ?>
-        </ul>
+
+        <!-- Accessible a tous les utilisateurs connectes -->
+        <a href="changer_mdp.php">Modifier mon mot de passe</a>
+
+        <?php if (isAdmin()): ?>
+            <!-- Liens visibles uniquement pour les administrateurs -->
+            <a href="modifier_digicodes.php">Modifier les digicodes</a>
+            <a href="envoyer_mail.php">Envoyer un mail</a>
+        <?php endif; ?>
+
+        <!-- Deconnexion — toujours en dernier (style rouge via CSS :last-child) -->
+        <a href="logout.php">Se deconnecter</a>
+
     </nav>
 
 </div>

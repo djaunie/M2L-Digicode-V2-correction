@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 08 mai 2026 à 12:04
+-- Généré le : ven. 08 mai 2026 à 12:24
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
 
@@ -95,7 +95,15 @@ CREATE TABLE IF NOT EXISTS `mrbs_entry` (
   PRIMARY KEY (`id`),
   KEY `idxStartTime` (`start_time`),
   KEY `idxEndTime` (`end_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Déchargement des données de la table `mrbs_entry`
+--
+
+INSERT INTO `mrbs_entry` (`id`, `start_time`, `end_time`, `entry_type`, `repeat_id`, `room_id`, `timestamp`, `create_by`, `name`, `type`, `description`, `status`, `reminded`, `info_time`, `info_user`, `info_text`, `ical_uid`, `ical_sequence`, `ical_recur_id`) VALUES
+(1, 1778569200, 1778576400, 0, 0, 1, '2026-05-08 12:08:36', 'cheminl', 'Réunion de cheminl', 'E', '', 0, NULL, NULL, NULL, NULL, '', 0, ''),
+(2, 1778223600, 1778230800, 0, 0, 1, '2026-05-08 12:10:07', 'cheminl', 'Réunion de cheminl', 'E', '', 0, NULL, NULL, NULL, NULL, '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -207,20 +215,20 @@ CREATE TABLE IF NOT EXISTS `mrbs_room_digicode` (
 --
 
 INSERT INTO `mrbs_room_digicode` (`id`, `digicode`) VALUES
-(1, 'F6761F'),
-(2, '6DE8E7'),
-(3, '3F32DA'),
-(4, '4E6CEF'),
-(5, '81CD95'),
-(6, 'AA679E'),
-(7, 'AF9331'),
-(8, '5AA687'),
-(9, '4D0A07'),
-(10, 'D5977F'),
-(11, '2A0112'),
-(12, '1345CA'),
-(13, 'D97597'),
-(14, '07C2FE');
+(1, '1BF241'),
+(2, '10235D'),
+(3, '2CFB13'),
+(4, '700F6D'),
+(5, '8C9A5F'),
+(6, 'F5A189'),
+(7, 'F12060'),
+(8, 'CCF173'),
+(9, '388B87'),
+(10, 'AC0FCF'),
+(11, '911167'),
+(12, '580273'),
+(13, '6D29A3'),
+(14, 'D67AA2');
 
 -- --------------------------------------------------------
 
