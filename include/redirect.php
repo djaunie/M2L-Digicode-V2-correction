@@ -1,14 +1,14 @@
 <?php
 function redirect($url, $time=3)
 {
-	//On vérifie si aucune entête n'a déjà été envoyée
+	//On vÃ©rifie si aucune entÃªte n'a dÃ©jÃ  Ã©tÃ© envoyÃ©e
 	if (!headers_sent())  {
-		header("refresh: $time;url=$url"); // on redirige avec header si une entête a déjà été envoyée
+		header("refresh: $time;url=$url"); // on redirige avec header si une entÃªte a dÃ©jÃ  Ã©tÃ© envoyÃ©e
 		exit;
 	}
 	else
 	{
-		echo '<meta http-equiv="refresh" content="',$time,';url=',$url,'">'; // sinon on redirige avec un entête
+		echo '<meta http-equiv="refresh" content="',$time,';url=',$url,'">'; // sinon on redirige avec un entÃªte
 	}
 }
 ?>

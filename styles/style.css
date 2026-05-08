@@ -1,48 +1,327 @@
-/* style.css — M2L Application Digicode V1 */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 1rem; background: #f0f2f5;
-    color: #1a1a2e; min-height: 100vh; display: flex; align-items: center;
-    justify-content: center; padding: 2rem 1rem; }
-.container { background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.08);
-    padding: 2.5rem 2rem; width: 100%; max-width: 520px; }
-h1 { font-size: 1.5rem; color: #0d3b66; margin-bottom: .25rem; }
-h2 { font-size: 1.1rem; color: #555; margin-bottom: 1.5rem; font-weight: 400; }
-label { display: block; margin-top: 1rem; margin-bottom: .25rem; font-weight: 600; font-size: .9rem; }
-input[type="text"], input[type="password"], input[type="email"], textarea {
-    width: 100%; padding: .6rem .8rem; border: 1px solid #ccc; border-radius: 6px;
-    font-size: 1rem; transition: border-color .2s; }
-input:focus, textarea:focus { outline: none; border-color: #0d3b66; }
-button[type="submit"] { display: block; width: 100%; margin-top: 1.5rem; padding: .75rem;
-    background: #0d3b66; color: #fff; border: none; border-radius: 6px;
-    font-size: 1rem; font-weight: 600; cursor: pointer; transition: background .2s; }
-button[type="submit"]:hover { background: #08264a; }
-.btn-retour { display: block; text-align: center; margin-top: .75rem; color: #0d3b66;
-    text-decoration: none; font-size: .9rem; }
-.btn-retour:hover { text-decoration: underline; }
-.erreur { background: #fde8e8; color: #b91c1c; border: 1px solid #fca5a5;
-    border-radius: 6px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem; }
-.succes { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7;
-    border-radius: 6px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem; }
-.digicode-box { background: #0d3b66; color: #fff; border-radius: 10px;
-    padding: 1.5rem; text-align: center; margin: 1.5rem 0; }
-.digicode-box h2 { color: #fff; font-size: 1rem; margin-bottom: .5rem; }
-.digicode { font-size: 2.5rem; font-weight: 700; letter-spacing: .4rem; font-family: monospace; }
-.digicode-sm { font-family: monospace; font-size: 1.1rem; letter-spacing: .2rem; }
-.menu { display: flex; flex-direction: column; gap: .6rem; margin-top: 1.5rem; }
-.menu a { display: block; padding: .65rem 1rem; background: #f0f2f5; border: 1px solid #ddd;
-    border-radius: 6px; color: #0d3b66; text-decoration: none; font-weight: 600;
-    text-align: center; transition: background .2s; }
-.menu a:hover { background: #dce3ec; }
-.menu a:last-child { background: #fde8e8; border-color: #fca5a5; color: #b91c1c; }
-.menu a:last-child:hover { background: #fecaca; }
-.checkbox-list { display: flex; flex-direction: column; gap: .4rem; margin-top: .4rem; }
-.checkbox-item { display: flex; align-items: center; gap: .5rem; font-size: .9rem; cursor: pointer; }
+/* =============================================================================
+   style.css — M2L Application Digicode V1
+   Auteur  : M2L / Correction enseignant
+   Palette : Bleu marine #0d3b66 | Fond #f0f2f5 | Blanc #ffffff
+   ============================================================================= */
 
-/* ===== Ajouts V2 ===== */
-.table-salles { width: 100%; border-collapse: collapse; margin: 1.2rem 0; }
-.table-salles th, .table-salles td { padding: .6rem .8rem; border: 1px solid #ddd;
-    text-align: left; font-size: .95rem; }
-.table-salles th { background: #0d3b66; color: #fff; font-weight: 600; }
-.table-salles tr:nth-child(even) { background: #f7f9fc; }
-.info { background: #fff8e1; color: #92400e; border: 1px solid #fcd34d;
-    border-radius: 6px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem; }
+
+/* =============================================================================
+   1. RESET & BOX-MODEL
+   ============================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =============================================================================
+   2. BASE — Body & mise en page générale
+   ============================================================================= */
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1rem;
+  background: #f0f2f5;
+  color: #1a1a2e;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+
+/* =============================================================================
+   3. CONTENEUR PRINCIPAL
+   Carte blanche centrée, largeur max 520px
+   ============================================================================= */
+
+.container {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+
+/* =============================================================================
+   4. TYPOGRAPHIE — Titres
+   ============================================================================= */
+
+h1 {
+  font-size: 1.5rem;
+  color: #0d3b66;
+  margin-bottom: 0.25rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  color: #555;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+
+/* =============================================================================
+   5. FORMULAIRES — Labels, champs, textarea, select
+   ============================================================================= */
+
+label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+/* État focus : mise en évidence de la bordure */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #0d3b66;
+}
+
+/* Select multiple : hauteur automatique selon size= */
+select[multiple] {
+  height: auto;
+  cursor: pointer;
+}
+
+/* Texte d'aide sous un champ (ex : Ctrl pour multi-sélection) */
+small {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+kbd {
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+
+/* =============================================================================
+   6. BOUTONS
+   ============================================================================= */
+
+/* Bouton principal — soumission de formulaire */
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background: #0d3b66;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #08264a;
+}
+
+/* Lien « Retour » styllisé en bouton secondaire */
+.btn-retour {
+  display: block;
+  text-align: center;
+  margin-top: 0.75rem;
+  color: #0d3b66;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.btn-retour:hover {
+  text-decoration: underline;
+}
+
+
+/* =============================================================================
+   7. ALERTES — Messages d'erreur et de succès
+   ============================================================================= */
+
+/* Message d'erreur — fond rouge clair */
+.erreur {
+  background: #fde8e8;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Message de succès — fond vert clair */
+.succes {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+
+/* =============================================================================
+   8. COMPOSANT DIGICODE — Affichage du code d'accès
+   ============================================================================= */
+
+/* Bloc encadré bleu marine avec le code affiéché en grand */
+.digicode-box {
+  background: #0d3b66;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.digicode-box h2 {
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Code principal — grand format avec espacement entre chiffres */
+.digicode {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.4rem;
+  font-family: monospace;
+}
+
+/* Code secondaire — format plus compact (ex : liste) */
+.digicode-sm {
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.2rem;
+}
+
+
+/* =============================================================================
+   9. MENU DE NAVIGATION — Page d'accueil
+   Liste de liens verticaux avec hover
+   ============================================================================= */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.menu a {
+  display: block;
+  padding: 0.65rem 1rem;
+  background: #f0f2f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  color: #0d3b66;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.menu a:hover {
+  background: #dce3ec;
+}
+
+/* Dernier lien du menu — déconnexion (rouge) */
+.menu a:last-child {
+  background: #fde8e8;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+.menu a:last-child:hover {
+  background: #fecaca;
+}
+
+/* ============================================================
+   V2 - Styles supplementaires
+   ============================================================ */
+
+/* Bloc digicode pour le cas "aucune reservation" */
+.digicode-box--vide {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    color: #856404;
+}
+
+/* Message informatif sous le code */
+.digicode-box .info {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 0.5rem;
+}
+
+/* Tableau des salles (modifier_digicodes.php) */
+.table-salles {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.table-salles th,
+.table-salles td {
+    padding: 0.6rem 1rem;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.table-salles thead {
+    background: #f0f0f0;
+    font-weight: bold;
+}
+
+.table-salles tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* Bouton rouge de confirmation pour la regeneration */
+.btn-danger {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 0.8rem;
+    transition: background 0.2s;
+}
+
+.btn-danger:hover {
+    background: #b02a37;
+}

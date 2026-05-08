@@ -1,37 +1,38 @@
 <?php
-// accueil.php — V2 : Consultation des digicodes par salle réservée ce jour
+// =============================================================================
+// accueil.php - Page d'accueil V2 (CU : Consulter le digicode)
+// Role : affiche le digicode propre a la salle reservee pour aujourd'hui
+//        ou indique qu'aucune reservation n'existe pour ce jour
+// Acces : reserve aux utilisateurs connectes (requireLogin)
+// =============================================================================
+
 require_once 'config.php';
 require_once 'session.php';
+require_once 'include/fonctions_digicode.php';
+
+// Verification de la connexion - redirige vers index.php si non connecte
 requireLogin();
 
 $pdo = getPDO();
-$aujourdhui_debut = mktime(0, 0, 0, date('n'), date('j'), date('Y'));
-$aujourdhui_fin   = mktime(23, 59, 59, date('n'), date('j'), date('Y'));
 
-// Récupère les salles réservées aujourd'hui par l'utilisateur connecté
-$stmt = $pdo->prepare("
-    SELECT DISTINCT r.id AS room_id, r.room_name, rd.digicode
-    FROM mrbs_entry e
-    JOIN mrbs_room r  ON e.room_id = r.id
-    LEFT JOIN mrbs_room_digicode rd ON r.id = rd.id
-    WHERE e.create_by = :login
-      AND e.start_time >= :debut
-      AND e.start_time <= :fin
-    ORDER BY e.start_time ASC
-");
-$stmt->execute([
-    ':login' => $_SESSION['user_name'],
-    ':debut' => $aujourdhui_debut,
-    ':fin'   => $aujourdhui_fin,
-]);
-$salles = $stmt->fetchAll();
+// -----------------------------------------------------------------------------
+// Recherche d'une reservation valide pour aujourd'hui
+// Le login de l'utilisateur est stocke en session sous la cle 'user_login'
+// -----------------------------------------------------------------------------
+$reservation = getReservationAujourdhui($pdo, $_SESSION['user_login']);
 
-$msgs_erreur = ['acces_refuse' => "Accès refusé : droits insuffisants."];
-$msgs_succes = [
-    'mdp_change'        => "Mot de passe modifié avec succès.",
-    'digicodes_changes' => "Digicodes régénérés avec succès.",
-    'mail_envoye'       => "Mail envoyé avec succès.",
+// -----------------------------------------------------------------------------
+// Messages flash (parametres GET) - affiches apres une redirection
+// -----------------------------------------------------------------------------
+$msgs_erreur = [
+    'acces_refuse' => "Acces refuse : droits insuffisants.",
 ];
+$msgs_succes = [
+    'mdp_change'         => "Mot de passe modifie avec succes.",
+    'digicodes_modifies' => "Digicodes regeneres avec succes.",
+    'mail_envoye'        => "Mail envoye avec succes.",
+];
+
 $messageErreur = $msgs_erreur[$_GET['error']   ?? ''] ?? '';
 $messageSucces = $msgs_succes[$_GET['success'] ?? ''] ?? '';
 ?>
@@ -40,15 +41,23 @@ $messageSucces = $msgs_succes[$_GET['success'] ?? ''] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>M2L Digicode — Accueil</title>
+    <title>M2L Digicode - Accueil</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-<div class="container">
-    <h1>Maison des Ligues — Digicode</h1>
-    <p>Bienvenue, <strong><?= htmlspecialchars($_SESSION['user_name']) ?></strong>
-       (<?= isAdmin() ? 'Administrateur' : 'Utilisateur' ?>)</p>
 
+<div class="container">
+
+    <h1>Maison des Ligues - Digicode</h1>
+
+    <p>
+        Bienvenue, <strong><?= htmlspecialchars($_SESSION['user_name']) ?></strong>
+        (<?= isAdmin() ? 'Administrateur' : 'Utilisateur' ?>)
+        &nbsp;|&nbsp;
+        <a href="logout.php">Se deconnecter</a>
+    </p>
+
+    <!-- Messages flash -->
     <?php if ($messageErreur): ?>
         <p class="erreur"><?= htmlspecialchars($messageErreur) ?></p>
     <?php endif; ?>
@@ -56,41 +65,39 @@ $messageSucces = $msgs_succes[$_GET['success'] ?? ''] ?? '';
         <p class="succes"><?= htmlspecialchars($messageSucces) ?></p>
     <?php endif; ?>
 
-    <h2>Vos réservations du jour — <?= date('d/m/Y') ?></h2>
-
-    <?php if (empty($salles)): ?>
-        <p class="info">Aucune réservation pour vous aujourd'hui.</p>
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Bloc digicode : affiche uniquement si une reservation existe        -->
+    <!-- ------------------------------------------------------------------ -->
+    <?php if ($reservation): ?>
+        <div class="digicode-box">
+            <h2>Code d'acces - <?= htmlspecialchars($reservation['room_name']) ?></h2>
+            <p class="digicode"><?= htmlspecialchars(strtoupper($reservation['digicode'])) ?></p>
+            <p class="info">Votre reservation du <?= date('d/m/Y') ?> est confirmee.</p>
+        </div>
     <?php else: ?>
-        <table class="table-salles">
-            <thead>
-                <tr>
-                    <th>Salle</th>
-                    <th>Code d'accès</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($salles as $salle): ?>
-                <tr>
-                    <td><?= htmlspecialchars($salle['room_name']) ?></td>
-                    <td class="digicode-sm">
-                        <?= $salle['digicode']
-                            ? strtoupper(htmlspecialchars($salle['digicode']))
-                            : '<em>Non défini</em>' ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="digicode-box digicode-box--vide">
+            <h2>Aucune reservation aujourd'hui</h2>
+            <p class="info">
+                Vous n'avez pas de salle reservee pour le <?= date('d/m/Y') ?>.
+                Le code d'acces est disponible uniquement en cas de reservation valide.
+            </p>
+        </div>
     <?php endif; ?>
 
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Navigation selon le role                                            -->
+    <!-- ------------------------------------------------------------------ -->
     <nav class="menu">
-        <a href="changer_mdp.php">Changer mon mot de passe</a>
-        <?php if (isAdmin()): ?>
-            <a href="modifier_digicode.php">Modifier les digicodes</a>
-            <a href="envoyer_mail.php">Envoyer un mail</a>
-        <?php endif; ?>
-        <a href="logout.php">Se déconnecter</a>
+        <ul>
+            <li><a href="changer_mdp.php">Modifier mon mot de passe</a></li>
+            <?php if (isAdmin()): ?>
+                <li><a href="modifier_digicodes.php">Regenerer les digicodes</a></li>
+                <li><a href="envoyer_mail.php">Envoyer un mail</a></li>
+            <?php endif; ?>
+        </ul>
     </nav>
+
 </div>
+
 </body>
 </html>
